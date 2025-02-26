@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
 
 public class todolist {
     private ArrayList<Task> tasks ;
@@ -46,20 +47,22 @@ public class todolist {
             }}
     }
 
+
+
     public void displayTasks() {
-        for(Task task : tasks) {
-            if (task.isDone()) {
-                System.out.println("Task [ID: " + task.getId() + ", Title: " + task.getTitle() +
-                        ", Description: " + task.getDescription() + ", Done ]");
-            }
-            else {
-                System.out.println("Task [ID: " + task.getId() + ", Title: " + task.getTitle() +
-                        ", Description: " + task.getDescription() + ", Not Done ]");
-            }
+        System.out.printf(Locale.ENGLISH, "| %-5s | %-20s | %-25s | %-10s |\n", "ID", "Title", "Description", "Status");
+        System.out.println("-------------------------------------------------------------------------");
 
-
+        for (Task task : tasks) {
+            String status = task.isDone() ? "Done" : "Not Done";
+            System.out.printf(Locale.ENGLISH, "| %-5d | %-20s | %-25s | %-10s |\n",
+                    task.getId(), task.getTitle(), task.getDescription(), status);
         }
+        System.out.println("\n");
+
     }
+
+
     public void exportToCSV(String filePath) {
         try (FileWriter writer = new FileWriter(filePath)) {
             writer.append("ID,Title,Description,Status\n");
